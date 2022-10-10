@@ -1,16 +1,16 @@
-import Secoes from "../models/secaoModel";
+import Epis from "../models/epiModel";
 
-class SecaoController {
+class EpiController {
   async create(req, res) {
     try {
-      const newSecao = await Secoes.create(req.body);
-      const Secao = await Secoes.findByPk(newSecao.id);
-      return res.json(Secao);
+      const newEpi = await Epis.create(req.body);
+      const Epi = await Epis.findByPk(newEpi.id);
+      return res.json(Epi);
     } catch (e) {
       if (e.name === 'SequelizeUniqueConstraintError') {
         return res
           .status(400)
-          .json({ errors: ['Seção já cadastrada na base de dados.'] });
+          .json({ errors: ['EPI já cadastrado na base de dados.'] });
       }
       return res
         .status(400)
@@ -21,7 +21,7 @@ class SecaoController {
   // read/index
   async index(req, res) {
     try {
-      const data = await Secoes.findAndCountAll();
+      const data = await Epis.findAndCountAll();
       return res.json( data );
     } catch (e) {
       console.log(e);
@@ -35,15 +35,15 @@ class SecaoController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const Secao = await Secoes.findByPk(id);
-      if (!Secao) {
+      const Epi = await Epis.findByPk(id);
+      if (!Epi) {
         return res
           .status(400)
           .json({
             errors: ['Id não existe.'],
           });
       } else {
-        return res.json(Secao);
+        return res.json(Epi);
       }
     } catch (e) {
       return res
@@ -56,25 +56,25 @@ class SecaoController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const Secao = await Secoes.findByPk(id);
+      const Epi = await Epis.findByPk(id);
 
-      if (!Secao) {
+      if (!Epi) {
         return res
           .status(400)
           .json({
             errors: ['Id não existe.'],
           });
       }
-      await Secao.update(req.body);
+      await Epi.update(req.body);
 
-      const SecaoUpdated = await Secoes.findByPk(id);
+      const EpiUpdated = await Epis.findByPk(id);
 
-      return res.json(SecaoUpdated);
+      return res.json(EpiUpdated);
     } catch (e) {
       if (e.name === 'SequelizeUniqueConstraintError') {
         return res
           .status(400)
-          .json({ errors: ['Seção já cadastrada na base de dados.'] });
+          .json({ errors: ['EPI já cadastrado na base de dados.'] });
       }
       return res
         .status(400)
@@ -86,16 +86,16 @@ class SecaoController {
   async delete(req, res) {
     try {
       const { id } = req.params;
-      const Secao = await Secoes.findByPk(id);
+      const Epi = await Epis.findByPk(id);
 
-      if (!Secao) {
+      if (!Epi) {
         return res
           .status(400)
           .json({
             errors: ['Id não existe.'],
           });
       }
-      await Secao.destroy();
+      await Epi.destroy();
       return res.json(null);
     } catch (e) {
       return res
@@ -105,4 +105,4 @@ class SecaoController {
   }
 }
 
-export default new SecaoController();
+export default new EpiController();

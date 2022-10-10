@@ -13,6 +13,8 @@ npm i mariadb
 npx sequelize migration:create --name=secoes
 npx sequelize migration:create --name=usuarios
 npx sequelize migration:create --name=funcoes
+npx sequelize migration:create --name=riscos
+npx sequelize migration:create --name=epis
 
 --migra tabelas para o banco de dados
 npx sequelize db:migrate
@@ -23,8 +25,8 @@ npx sequelize db:migrate:undo:all
 
 
 --ordem de criação:
-1. migrations (lembrar de colocar no index.js da pasta migration)
-2. models
+1. migrations
+2. models (lembrar de colocar no index.js da pasta database)
 3. Controllers
 4. Routes
 
@@ -41,3 +43,15 @@ npx sequelize db:migrate:undo:all
 8. Instalar CORS e Helmet
   npm i cors helmet
 
+Publicar no servidor
+npm run build
+git add
+read message
+echo 'Mensagem do commit'
+git commit -am "$message"
+git push
+
+ssh enedereço do servidor \
+'git -C /home/pastadaaplicaoa/api'\
+'pull origin master && '\
+'pm2 restart api && sudo systemctl restart nginx'

@@ -1,16 +1,16 @@
-import Secoes from "../models/secaoModel";
+import Riscos from "../models/riscoModel";
 
-class SecaoController {
+class RiscoController {
   async create(req, res) {
     try {
-      const newSecao = await Secoes.create(req.body);
-      const Secao = await Secoes.findByPk(newSecao.id);
-      return res.json(Secao);
+      const newRisco = await Riscos.create(req.body);
+      const Risco = await Riscos.findByPk(newRisco.id);
+      return res.json(Risco);
     } catch (e) {
       if (e.name === 'SequelizeUniqueConstraintError') {
         return res
           .status(400)
-          .json({ errors: ['Seção já cadastrada na base de dados.'] });
+          .json({ errors: ['Risco já cadastrada na base de dados.'] });
       }
       return res
         .status(400)
@@ -21,7 +21,7 @@ class SecaoController {
   // read/index
   async index(req, res) {
     try {
-      const data = await Secoes.findAndCountAll();
+      const data = await Riscos.findAndCountAll();
       return res.json( data );
     } catch (e) {
       console.log(e);
@@ -35,15 +35,15 @@ class SecaoController {
   async show(req, res) {
     try {
       const { id } = req.params;
-      const Secao = await Secoes.findByPk(id);
-      if (!Secao) {
+      const Risco = await Riscos.findByPk(id);
+      if (!Risco) {
         return res
           .status(400)
           .json({
             errors: ['Id não existe.'],
           });
       } else {
-        return res.json(Secao);
+        return res.json(Risco);
       }
     } catch (e) {
       return res
@@ -56,25 +56,25 @@ class SecaoController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const Secao = await Secoes.findByPk(id);
+      const Risco = await Riscos.findByPk(id);
 
-      if (!Secao) {
+      if (!Risco) {
         return res
           .status(400)
           .json({
             errors: ['Id não existe.'],
           });
       }
-      await Secao.update(req.body);
+      await Risco.update(req.body);
 
-      const SecaoUpdated = await Secoes.findByPk(id);
+      const RiscoUpdated = await Riscos.findByPk(id);
 
-      return res.json(SecaoUpdated);
+      return res.json(RiscoUpdated);
     } catch (e) {
       if (e.name === 'SequelizeUniqueConstraintError') {
         return res
           .status(400)
-          .json({ errors: ['Seção já cadastrada na base de dados.'] });
+          .json({ errors: ['Risco já cadastrada na base de dados.'] });
       }
       return res
         .status(400)
@@ -86,16 +86,16 @@ class SecaoController {
   async delete(req, res) {
     try {
       const { id } = req.params;
-      const Secao = await Secoes.findByPk(id);
+      const Risco = await Riscos.findByPk(id);
 
-      if (!Secao) {
+      if (!Risco) {
         return res
           .status(400)
           .json({
             errors: ['Id não existe.'],
           });
       }
-      await Secao.destroy();
+      await Risco.destroy();
       return res.json(null);
     } catch (e) {
       return res
@@ -105,4 +105,4 @@ class SecaoController {
   }
 }
 
-export default new SecaoController();
+export default new RiscoController();

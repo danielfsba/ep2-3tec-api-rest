@@ -3,7 +3,7 @@ import Usuario from '../models/usuarioModel';
 
 class TokenController {
   async create(req, res) {
-    const { email = '', password = '' } = req.body;
+    const { email = '', password = '' } = req.body.data;
 
     if (!email) {
       return res
@@ -23,15 +23,15 @@ class TokenController {
     if (!await user.passwordIsvalid(password)) return res.status(401).json({ errors: 'Senha Inválida.' });
 
     const { id, admin } = user;
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       { id, email },
       process.env.TOKEN_SECRET,
       { expiresIn: process.env.TOKEN_EXPIRATION },
     );
 
     return res.json({
-      token,
-      user: {
+      accessToken,
+      data: {
         nome: user.nome, id, email, admin,
       },
     });
